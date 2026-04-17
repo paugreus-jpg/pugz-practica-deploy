@@ -13,14 +13,25 @@ jobs:
       # 1. Validar nombre de la rama (Ej: feature/..., bugfix/..., hotfix/...)
       - name: Validate Branch Name
         run: |
+          # github.head_ref es el nombre de la rama en un Pull Request
           BRANCH_NAME="${{ github.head_ref }}"
-          REGEX="^[0000-9999]\-[a-zA-Z0-9_-]+$"
+
+          # Explicación del REGEX:
+          # ^[0-9]{4}  -> Debe empezar con exactamente 4 números del 0 al 9
+          # \-         -> Seguido de un guion literal
+          # .+         -> Seguido de cualquier carácter (al menos uno)
+          # $          -> Fin de la cadena
+          REGEX="^[0-9]{4}\-.+$"
+
           if [[ ! $BRANCH_NAME =~ $REGEX ]]; then
-            echo "ERROR: El nombre de la rama '$BRANCH_NAME' no sigue la convención."
-            echo "Usa: feature/..., bugfix/..., hotfix/... o task/..."
+            echo "-------------------------------------------------------"
+            echo "ERROR: NOMBRE DE RAMA INVÁLIDO"
+            echo "Tu rama se llama: $BRANCH_NAME"
+            echo "El formato debe ser: 0000-nombre-de-la-tarea"
+            echo "Ejemplo: 1234-login-fix"
+            echo "-------------------------------------------------------"
             exit 1
           fi
-
       # 2. Configurar Entorno
       - name: Set up JDK 21
         uses: actions/setup-java@v4
