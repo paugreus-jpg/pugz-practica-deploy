@@ -41,3 +41,17 @@ jobs:
       # 5. Ejecutar Tests Automáticos
       - name: Run Tests
         run: mvn test
+
+      # 1. Construir la imagen de Docker
+      - name: Build Docker Image
+        run: docker build -t mi-proyecto-app:latest .
+
+      # 2. Listar imágenes y filtrar por el tamaño de la nuestra
+      - name: Show Docker Image Size
+        run: |
+          IMAGE_SIZE=$(docker images --format "{{.Size}}" mi-proyecto-app:latest)
+          echo "### 🚀 Reporte de Docker" >> $GITHUB_STEP_SUMMARY
+          echo "La imagen se ha generado correctamente." >> $GITHUB_STEP_SUMMARY
+          echo "- **Nombre:** mi-proyecto-app:latest" >> $GITHUB_STEP_SUMMARY
+          echo "- **Tamaño:** $IMAGE_SIZE" >> $GITHUB_STEP_SUMMARY
+          echo "El tamaño detectado es: $IMAGE_SIZE"
