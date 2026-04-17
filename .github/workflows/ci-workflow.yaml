@@ -14,7 +14,7 @@ jobs:
       - name: Validate Branch Name
         run: |
           BRANCH_NAME="${{ github.head_ref }}"
-          REGEX="^(feature|bugfix|hotfix|task)\/[a-zA-Z0-9_-]+$"
+          REGEX="^[0000-9999]\-[a-zA-Z0-9_-]+$"
           if [[ ! $BRANCH_NAME =~ $REGEX ]]; then
             echo "ERROR: El nombre de la rama '$BRANCH_NAME' no sigue la convención."
             echo "Usa: feature/..., bugfix/..., hotfix/... o task/..."
