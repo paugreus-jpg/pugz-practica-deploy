@@ -1,4 +1,4 @@
-ame: Broken CI
+name: Broken CI
 
 on:
   pull_request:
